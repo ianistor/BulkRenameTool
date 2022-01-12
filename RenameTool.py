@@ -1,4 +1,5 @@
 import sys
+import re
 import glob
 import os
 from PySide2 import QtCore, QtWidgets, QtGui
@@ -125,14 +126,22 @@ class Window(QtWidgets.QDialog):
         state = self.stateComboBox.currentText()
         if state == "Alege judetul":
             QtWidgets.QMessageBox().critical(self, u"Atentie!", u"Nu ai selectat un judet")
+            return
         else:
             print(os.getcwd())
             for f in glob.glob("*"):
-                new_name = f.split("_")[0] + "_" + f.split("_")[1] + "_" + state.lower() + "_" + f.split("_")[3] + "_" + \
-                           f.split("_")[4]
-                os.rename(f, new_name)
+                new_state_names = []
+                splitting_state = re.split('([_])', f)
+                new_state_name = splitting_state[:4]
+                end_name = splitting_state[5:]
+                new_state_names.extend(new_state_name)
+                new_state_names.extend(state.lower())
+                new_state_names.extend(end_name)
+                name_string = ''.join(map(str, new_state_names))
+                print(name_string)
+                os.rename(f, name_string)
                 count_state += 1
-                print(("Renamed" + f + " into " + new_name))
+                print(("Renamed -> " + f + " into ->  " + name_string))
             QtWidgets.QMessageBox().information(self, u"Gata!", state + " a fost adaugat la " + str(count_state) + " fisiere")
 
 
@@ -143,15 +152,24 @@ class Window(QtWidgets.QDialog):
         print (city)
         if len(city) == 0:
             QtWidgets.QMessageBox().critical(self, u"Atentie!", u"Campul pentru oras este gol.")
+            return
         else:
             print (os.getcwd())
             for f in glob.glob("*"):
-                new_name = f.split("_")[0] + "_" + f.split("_")[1] + "_" + f.split("_")[2] + "_" + city + "_" + f.split("_")[4]
-                os.rename(f, new_name)
+                new_name_list = []
+                splitting_city = re.split('([_])', f)
+                new_name = splitting_city[:6]
+                end_name = splitting_city[7:]
+                new_name_list.extend(new_name)
+                new_name_list.extend(city.lower())
+                new_name_list.extend(end_name)
+                name_string = ''.join(map(str, new_name_list))
+                print (name_string)
+                os.rename(f, name_string)
                 count += 1
-                print (("Renamed" + f + " into " + new_name))
+                print (("Renamed ->  " + f + " into -> " + str(name_string)))
         QtWidgets.QMessageBox().information(self, u"Gata!", city + " a fost adaugat la " + str(count) + " fisiere")
-
+        del new_name_list[:]
 
 
 
