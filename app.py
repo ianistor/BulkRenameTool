@@ -10,13 +10,19 @@ class Window(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(Window, self).__init__(parent)
 
-        self.browseButton = self.createButton("&Browse...", self.browse)
+        self.browseButton = self.createButton("&Schimba folderul...", self.browse)
         self.directoryComboBox = self.createComboBox(QtCore.QDir.currentPath())
-        self.addPrefix = self.createButton("Add prefix", self.change_prefix)
+        self.addPrefix = self.createButton("Adauga prefix", self.change_prefix)
+        self.changeState = self.createButton("Modifica judetul", self.change_state)
+        self.changeCity = self.createButton("Modifica orasul", self.change_city)
+        self.stateComboBox = self.createComboBox("Alege judetul")
+        self.stateComboBox.addItems(["B", "AB", "AR", "AG", "BC", "BH", "BN", "BT", "BR", "BV", "BZ", "CL", "CS", "CJ", "CT", "CV", "DB", "DJ", "GL", "GR", "GJ", "HR", "HD", "IL", "IS", "IF", "MM", "MH", "MS", "NT", "OT", "PH", "SJ", "SM", "SB", "SV", "TR", "TM", "TL", "VL", "VS", "VN"])
 
         global prefix
 
-        directoryLabel = QtWidgets.QLabel("Working Folder:")
+        directoryLabel = QtWidgets.QLabel("Folder:")
+        self.stateLabel = QtWidgets.QLabel("Judetul:")
+        self.cityLabel = QtWidgets.QLabel("Orasul:")
 
 
         buttonsLayout = QtWidgets.QHBoxLayout()
@@ -28,19 +34,29 @@ class Window(QtWidgets.QDialog):
         prefixLabel = QtWidgets.QLabel("Prefix:")
         self.prefix_edit = QtWidgets.QLineEdit()
 
+        # self.state_edit = QtWidgets.QLineEdit()
+        self.city_edit = QtWidgets.QLineEdit()
+
         mainLayout.addWidget(directoryLabel, 0, 0)
+
         mainLayout.addWidget(self.directoryComboBox, 0, 1)
         mainLayout.addWidget(self.browseButton, 0, 2)
         mainLayout.addWidget(prefixLabel, 1,0)
-        mainLayout.addWidget(self.prefix_edit, 1,1)
+        mainLayout.addWidget(self.prefix_edit, 1,1) # Edit box for prefix
         mainLayout.addWidget(self.addPrefix, 1,2)
+        mainLayout.addWidget(self.stateLabel, 2, 0)
+        mainLayout.addWidget(self.stateComboBox, 2, 1) # Edit box for state
+        mainLayout.addWidget(self.changeState, 2, 2)
+        mainLayout.addWidget(self.cityLabel, 3, 0)
+        mainLayout.addWidget(self.city_edit, 3, 1)
+        mainLayout.addWidget(self.changeCity, 3, 2)
 
         #  Mainwindow
 
         self.setLayout(mainLayout)
         self.setGeometry(300, 300, 450, 100)
-        self.setWindowTitle('Name Changer')
-        self.setWindowIcon(QtGui.QIcon('AddPrefix.ico'))
+        self.setWindowTitle('RenameTool')
+        self.setWindowIcon(QtGui.QIcon('RenameTool.ico'))
 
 
         self.show()
@@ -78,6 +94,7 @@ class Window(QtWidgets.QDialog):
         boxEdit = QtWidgets.QLineEdit(text)
         return boxEdit
 
+
     def change_prefix(self):
         prefix = self.prefix_edit.text()
         print (prefix)
@@ -106,6 +123,44 @@ class Window(QtWidgets.QDialog):
                 print (fix_prefix)
                 os.rename(f, fix_prefix)
             QtWidgets.QMessageBox.information(self, 'Done', "Prefix has been added")
+
+    def change_state(self):
+        # XX = judetul si este 2 in array
+        count_state = 0
+        state = self.stateComboBox.currentText()
+        if state == "Alege judetul":
+            QtWidgets.QMessageBox().critical(self, u"Atentie!", u"Nu ai selectat un judet")
+        else:
+            print(os.getcwd())
+            for f in glob.glob("*"):
+                new_name = f.split("_")[0] + "_" + f.split("_")[1] + "_" + state.lower() + "_" + f.split("_")[3] + "_" + \
+                           f.split("_")[4] + "_" + f.split("_")[5]
+                os.rename(f, new_name)
+                count_state += 1
+                print(("Renamed" + f + " into " + new_name))
+            QtWidgets.QMessageBox().information(self, u"Gata!", state + " a fost adaugat la " + str(count_state) + " fisiere")
+
+
+
+    def change_city(self):
+        # current_name_fix = ""
+        count = 0
+        city = self.city_edit.text()
+        print (city)
+        if len(city) == 0:
+            QtWidgets.QMessageBox().critical(self, u"Atentie!", u"Campul pentru oras este gol.")
+        else:
+            print (os.getcwd())
+            for f in glob.glob("*"):
+                # print(f)
+                # name_split = f.split("_")[3]
+                new_name = f.split("_")[0] + "_" + f.split("_")[1] + "_" + f.split("_")[2] + "_" + city + "_" + f.split("_")[4] + "_" + f.split("_")[5]
+                os.rename(f, new_name)
+                count += 1
+                print (("Renamed" + f + " into " + new_name))
+        QtWidgets.QMessageBox().information(self, u"Gata!", city + " a fost adaugat la " + str(count) + " fisiere")
+
+
 
 
 if __name__ == '__main__':
