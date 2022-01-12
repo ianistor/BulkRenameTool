@@ -1,10 +1,10 @@
 import sys
 import glob
 import os
-from PySide2 import QtWidgets,QtCore, QtWidgets, QtGui
+from PySide2 import QtCore, QtWidgets, QtGui
 
-VERSION = ("1.0.1")
-CONTACT = "ndrnistor@yahoo.com"
+VERSION = ("2.0")
+CONTACT = "ndrnistor@gmail.com"
 
 class Window(QtWidgets.QDialog):
     def __init__(self, parent=None):
