@@ -1,8 +1,8 @@
-import sys
 import re
 import glob
 import os
 from PySide2 import QtCore, QtWidgets, QtGui
+from PySide2.QtWidgets import QApplication
 
 VERSION = ("2.0")
 CONTACT = "ndrnistor@gmail.com"
@@ -176,8 +176,11 @@ class Window(QtWidgets.QDialog):
 if __name__ == '__main__':
 
     import sys
-
-    app = QtWidgets.QApplication(sys.argv)
+    if not QtWidgets.QApplication.instance():
+        app = QtWidgets.QApplication(sys.argv)
+    else:
+        app = QtWidgets.QApplication.instance()
+    # QtWidgets.QApplication()
     window = Window()
     window.show()
     sys.exit(app.exec_())
