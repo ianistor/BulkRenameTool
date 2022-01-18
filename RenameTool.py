@@ -62,6 +62,10 @@ class Window(QtWidgets.QDialog):
 
 
     def browse(self):
+        """
+        Changes working folder
+        :return:
+        """
         directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Find Files",
                 QtCore.QDir.currentPath())
         if directory:
@@ -75,6 +79,11 @@ class Window(QtWidgets.QDialog):
         return directory
 
     def createComboBox(self, text=""):
+        """
+        Function for faster Combo box creation (more clean than anything else really)
+        :param text:
+        :return:
+        """
         comboBox = QtWidgets.QComboBox()
         comboBox.setEditable(True)
         comboBox.addItem(text)
@@ -83,16 +92,31 @@ class Window(QtWidgets.QDialog):
         return comboBox
 
     def createButton(self, text, member):
+        """
+        Function for faster button creation (more clean than anything else really)
+        :param text:
+        :param member:
+        :return:
+        """
         button = QtWidgets.QPushButton(text)
         button.clicked.connect(member)
         return button
 
     def createLineEdit(self, text=""):
+        """
+        Function for faster edit box creation (more clean than anything else really)
+        :param text:
+        :return:
+        """
         boxEdit = QtWidgets.QLineEdit(text)
         return boxEdit
 
 
     def change_prefix(self):
+        """
+        Function to modify prefix of all files in a folder (for safety reasons I've limited it to .tif, .jpeg, .jpg only)
+        This should be written more nicely when I have time, but for now, not touching what works :)
+        """        
         prefix = self.prefix_edit.text()
         print (prefix)
         if len(prefix) == 0:
@@ -122,6 +146,9 @@ class Window(QtWidgets.QDialog):
             QtWidgets.QMessageBox.information(self, 'Done',"Prefix: "+ '"' + prefix + '"' + "was added")
 
     def change_state(self):
+        """
+        Renames the 3rd _ group (which in this case equals the state)
+        """
         count_state = 0
         state = self.stateComboBox.currentText()
         if state == "Pick State":
@@ -147,6 +174,11 @@ class Window(QtWidgets.QDialog):
 
 
     def change_city(self):
+        """
+        Renames the 4th _ group (which in this case equals the city)
+        :return:
+        """
+
         count = 0
         city = self.city_edit.text()
         print (city)
@@ -169,7 +201,6 @@ class Window(QtWidgets.QDialog):
                 count += 1
                 print (("Renamed ->  " + f + " into -> " + str(name_string)))
         QtWidgets.QMessageBox().information(self, u"Done!", city + " was added to  " + str(count) + " files")
-        del new_name_list[:]
 
 
 
