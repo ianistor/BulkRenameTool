@@ -1,7 +1,6 @@
 # Bulk rename tool
 ## Created for indexing of photos based on a specific naming convention
-
-Tool thats adds a certain prefix to all files selected in a working folder.
+Goal : Created to help my mother automate some of her boring work archiving photos that included a lot of manual renaming of folders after scanning and indexing.
 
 
 ![image](https://user-images.githubusercontent.com/45632814/150032011-03318fd2-2db5-4610-8dc2-219ca7e49afc.png)
