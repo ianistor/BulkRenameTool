@@ -176,8 +176,10 @@ class Window(QtWidgets.QDialog):
 if __name__ == '__main__':
 
     import sys
-
-    app = QtWidgets.QApplication(sys.argv)
+    if not QtWidgets.QApplication.instance():
+        app = QtWidgets.QApplication(sys.argv)
+    else:
+        app = QtWidgets.QApplication.instance()
     window = Window()
     window.show()
     sys.exit(app.exec_())
