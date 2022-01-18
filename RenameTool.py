@@ -11,19 +11,19 @@ class Window(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(Window, self).__init__(parent)
 
-        self.browseButton = self.createButton("&Schimba folderul...", self.browse)
+        self.browseButton = self.createButton("&Browse working folder...", self.browse)
         self.directoryComboBox = self.createComboBox(QtCore.QDir.currentPath())
-        self.addPrefix = self.createButton("Adauga prefix", self.change_prefix)
-        self.changeState = self.createButton("Modifica judetul", self.change_state)
-        self.changeCity = self.createButton("Modifica orasul", self.change_city)
-        self.stateComboBox = self.createComboBox("Alege judetul")
+        self.addPrefix = self.createButton("Add prefix", self.change_prefix)
+        self.changeState = self.createButton("Change state", self.change_state)
+        self.changeCity = self.createButton("Change city", self.change_city)
+        self.stateComboBox = self.createComboBox("Pick your state")
         self.stateComboBox.addItems(["B", "AB", "AR", "AG", "BC", "BH", "BN", "BT", "BR", "BV", "BZ", "CL", "CS", "CJ", "CT", "CV", "DB", "DJ", "GL", "GR", "GJ", "HR", "HD", "IL", "IS", "IF", "MM", "MH", "MS", "NT", "OT", "PH", "SJ", "SM", "SB", "SV", "TR", "TM", "TL", "VL", "VS", "VN"])
 
         global prefix
 
         directoryLabel = QtWidgets.QLabel("Folder:")
-        self.stateLabel = QtWidgets.QLabel("Judetul:")
-        self.cityLabel = QtWidgets.QLabel("Orasul:")
+        self.stateLabel = QtWidgets.QLabel("State:")
+        self.cityLabel = QtWidgets.QLabel("City:")
 
 
         buttonsLayout = QtWidgets.QHBoxLayout()
@@ -119,13 +119,13 @@ class Window(QtWidgets.QDialog):
                 fix_prefix = prefix + f
                 print (fix_prefix)
                 os.rename(f, fix_prefix)
-            QtWidgets.QMessageBox.information(self, 'Gata',"Prefix-ul "+ '"' + prefix + '"' + "a fost adaugat")
+            QtWidgets.QMessageBox.information(self, 'Done',"Prefix: "+ '"' + prefix + '"' + "was added")
 
     def change_state(self):
         count_state = 0
         state = self.stateComboBox.currentText()
-        if state == "Alege judetul":
-            QtWidgets.QMessageBox().critical(self, u"Atentie!", u"Nu ai selectat un judet")
+        if state == "Pick State":
+            QtWidgets.QMessageBox().critical(self, u"Error!", u"No state was selected")
             return
         else:
             print(os.getcwd())
@@ -142,7 +142,7 @@ class Window(QtWidgets.QDialog):
                 os.rename(f, name_string)
                 count_state += 1
                 print(("Renamed -> " + f + " into ->  " + name_string))
-            QtWidgets.QMessageBox().information(self, u"Gata!", state + " a fost adaugat la " + str(count_state) + " fisiere")
+            QtWidgets.QMessageBox().information(self, u"Done!", state + " was added to " + str(count_state) + " files")
 
 
 
@@ -151,7 +151,7 @@ class Window(QtWidgets.QDialog):
         city = self.city_edit.text()
         print (city)
         if len(city) == 0:
-            QtWidgets.QMessageBox().critical(self, u"Atentie!", u"Campul pentru oras este gol.")
+            QtWidgets.QMessageBox().critical(self, u"Error!", u"City field is empty, please edit")
             return
         else:
             print (os.getcwd())
@@ -168,7 +168,7 @@ class Window(QtWidgets.QDialog):
                 os.rename(f, name_string)
                 count += 1
                 print (("Renamed ->  " + f + " into -> " + str(name_string)))
-        QtWidgets.QMessageBox().information(self, u"Gata!", city + " a fost adaugat la " + str(count) + " fisiere")
+        QtWidgets.QMessageBox().information(self, u"Done!", city + " was added to  " + str(count) + " files")
         del new_name_list[:]
 
 
