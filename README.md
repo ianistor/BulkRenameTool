@@ -7,7 +7,7 @@ Tool thats adds a certain prefix to all files selected in a working folder.
 ![image](https://user-images.githubusercontent.com/45632814/150032011-03318fd2-2db5-4610-8dc2-219ca7e49afc.png)
 
 Folder = Active folder where the files will be renamed  
-Prefix = If you want to add a prefix to all the files, put the desired prefix in the edit box and press Add prefix. 
+Prefix = If you want to add a prefix to all the files, put the desired prefix in the edit box and press Add prefix.   
 ![prefix_rename](https://user-images.githubusercontent.com/45632814/150033129-2ce2df81-e777-4645-be37-79cf8ca13737.png)
 
 State = Select a state from the list and then click Change state for the tool to rename the state coresponding naming convention of the file (in my case its this f3_c6_**AG**_bucuresti_001) _State names are hardcoded on line 20._    
